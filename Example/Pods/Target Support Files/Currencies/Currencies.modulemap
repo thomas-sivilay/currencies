@@ -1,0 +1,6 @@
+framework module Currencies {
+  umbrella header "Currencies-umbrella.h"
+
+  export *
+  module * { export * }
+}

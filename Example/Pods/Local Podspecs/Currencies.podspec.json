@@ -1,0 +1,22 @@
+{
+  "name": "Currencies",
+  "version": "0.1.0",
+  "summary": "A short description of Currencies.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/sivilaythomas/Currencies",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "sivilaythomas": "thomas.sivilay@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/sivilaythomas/Currencies.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "Currencies/Classes/**/*"
+}

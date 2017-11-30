@@ -1,0 +1,6 @@
+use_frameworks!
+target 'Currencies_Tests' do
+  pod 'Currencies', :path => '../'
+  
+  
+end
