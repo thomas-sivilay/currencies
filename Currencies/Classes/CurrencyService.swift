@@ -6,8 +6,12 @@ public struct Currency {
     public let currencySymbol: String?
     public let regionCode: String?
     public let regionName: String?
-    public let deprecated: Bool
-    public let repacedByCurrencyCode: String?
+    public let status: Status
+    
+    public enum Status {
+        case available
+        case replaced(byCurrencyCode: String)
+    }
 }
 
 public class CurrencyService {
@@ -24,31 +28,39 @@ public class CurrencyService {
 
         for currencyCode in currencyCodes {
             if let locale = locales.filter({ $0.currencyCode == currencyCode }).first {
-                let currency = Currency(name: userLocale.localizedString(forCurrencyCode: currencyCode)!,
+                guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode), let regionCode = locale.regionCode else {
+                    continue
+                }
+                
+                let currency = Currency(name: localizedCurrencyName,
                                         currencyCode: currencyCode,
                                         currencySymbol: locale.currencySymbol,
                                         regionCode: locale.regionCode,
-                                        regionName: userLocale.localizedString(forRegionCode: locale.regionCode!),
-                                        deprecated: false,
-                                        repacedByCurrencyCode: nil)
+                                        regionName: userLocale.localizedString(forRegionCode: regionCode),
+                                        status: Currency.Status.available)
                 currencies.append(currency)
             } else if showDeprecatedCurrencies, let info = deprecated[currencyCode] {
-                let currency = Currency(name: userLocale.localizedString(forCurrencyCode: currencyCode)!,
+                guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode) else {
+                    continue
+                }
+                let currency = Currency(name: localizedCurrencyName,
                                         currencyCode: currencyCode,
                                         currencySymbol: info.currencySymbol,
                                         regionCode: info.regionCode,
                                         regionName: userLocale.localizedString(forRegionCode: info.regionCode),
-                                        deprecated: true,
-                                        repacedByCurrencyCode: info.replaceByCurrencyCode)
+                                        status: Currency.Status.replaced(byCurrencyCode: info.replaceByCurrencyCode))
                 currencies.append(currency)
             } else if let info = missing[currencyCode] {
-                let currency = Currency(name: userLocale.localizedString(forCurrencyCode: currencyCode)!,
+                guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode) else {
+                    continue
+                }
+
+                let currency = Currency(name: localizedCurrencyName,
                                         currencyCode: currencyCode,
                                         currencySymbol: info.currencySymbol,
                                         regionCode: info.regionCode,
                                         regionName: userLocale.localizedString(forRegionCode: info.regionCode),
-                                        deprecated: false,
-                                        repacedByCurrencyCode: nil)
+                                        status: Currency.Status.replaced(byCurrencyCode: info.replaceByCurrencyCode))
                 currencies.append(currency)
             } else {
                 print("Missing \(currencyCode)")
