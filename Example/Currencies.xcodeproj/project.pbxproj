@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		56F171A8DC46A06761BAC9D6 /* Pods_Currencies_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CACD08B2FD228DAF993974C5 /* Pods_Currencies_Tests.framework */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* CurrencyServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* CurrencyServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		07C1F8D794EACC988AE1C320 /* Pods-Currencies_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currencies_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Currencies_Tests/Pods-Currencies_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		268CEEB67B22EC9EFDC66223 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		268CEEB67B22EC9EFDC66223 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4C1379F32C98AA51CFA1215F /* Pods-Currencies_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currencies_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Currencies_Tests/Pods-Currencies_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		582B33B239C5F8D57742A22C /* Currencies.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = Currencies.podspec; path = ../Currencies.podspec; sourceTree = "<group>"; };
+		582B33B239C5F8D57742A22C /* Currencies.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Currencies.podspec; path = ../Currencies.podspec; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Currencies_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Currencies_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		BA7B18F4461D7001CBBBEE41 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* CurrencyServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyServiceTests.swift; sourceTree = "<group>"; };
+		BA7B18F4461D7001CBBBEE41 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CACD08B2FD228DAF993974C5 /* Pods_Currencies_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currencies_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -57,7 +57,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* CurrencyServiceTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -131,10 +131,6 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					607FACCF1AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0900;
@@ -229,7 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* CurrencyServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
