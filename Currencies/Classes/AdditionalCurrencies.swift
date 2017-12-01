@@ -1,6 +1,8 @@
 import Foundation
 
 struct AdditionalCurrencies {
+    typealias CurrencyCode = String
+    
     struct CurrencyInfo {
         let currencyCode: String
         let currencySymbol: String
@@ -8,7 +10,7 @@ struct AdditionalCurrencies {
         let regionCode: String
     }
 
-    func missingCommon() -> [String: CurrencyInfo] {
+    func missingCommon() -> [CurrencyCode: CurrencyInfo] {
         let cucInfo = CurrencyInfo(currencyCode: "CUC", currencySymbol: "$CUC", replaceByCurrencyCode: "", regionCode: "CUB")
         let lslInfo = CurrencyInfo(currencyCode: "LSL", currencySymbol: "LSL", replaceByCurrencyCode: "", regionCode: "LSO")
         
@@ -18,7 +20,7 @@ struct AdditionalCurrencies {
         ]
     }
     
-    func deprecatedCommon() -> [String: CurrencyInfo] {
+    func deprecatedCommon() -> [CurrencyCode: CurrencyInfo] {
         let byrInfo = CurrencyInfo(currencyCode: "BYR", currencySymbol: "Br", replaceByCurrencyCode: "BYN", regionCode: "BLR")
         let ltlInfo = CurrencyInfo(currencyCode: "LTL", currencySymbol: "LTL", replaceByCurrencyCode: "EUR", regionCode: "LTU")
         let lvlInfo = CurrencyInfo(currencyCode: "LVL", currencySymbol: "LVL", replaceByCurrencyCode: "EUR", regionCode: "LVA")
