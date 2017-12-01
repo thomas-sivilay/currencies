@@ -39,9 +39,9 @@ public class CurrencyService {
                                         regionName: userLocale.localizedString(forRegionCode: regionCode),
                                         status: Currency.Status.available)
                 currencies.append(currency)
-            } else if showDeprecatedCurrencies, let currency = currency(from: deprecated, userLocale: userLocale, currencyCode: currencyCode) {
+            } else if showDeprecatedCurrencies, let currency = makeCurrency(from: deprecated, userLocale: userLocale, currencyCode: currencyCode) {
                 currencies.append(currency)
-            } else if let currency = currency(from: missing, userLocale: userLocale, currencyCode: currencyCode) {
+            } else if let currency = makeCurrency(from: missing, userLocale: userLocale, currencyCode: currencyCode) {
                 currencies.append(currency)
             } else {
                 print("Missing \(currencyCode)")
@@ -51,7 +51,7 @@ public class CurrencyService {
         return currencies
     }
     
-    private func currency(from additionalDic: [AdditionalCurrencies.CurrencyCode: AdditionalCurrencies.CurrencyInfo], userLocale: Locale, currencyCode: AdditionalCurrencies.CurrencyCode) -> Currency? {
+    private func makeCurrency(from additionalDic: [AdditionalCurrencies.CurrencyCode: AdditionalCurrencies.CurrencyInfo], userLocale: Locale, currencyCode: AdditionalCurrencies.CurrencyCode) -> Currency? {
         guard let info = additionalDic[currencyCode], let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode) else {
             return nil
         }
