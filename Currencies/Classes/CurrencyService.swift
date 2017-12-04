@@ -6,6 +6,7 @@ public struct Currency {
     public let currencySymbol: String?
     public let regionCode: String?
     public let regionName: String?
+    public let localeIdentifier: String?
     public let status: Status
     
     public enum Status {
@@ -23,11 +24,14 @@ public class CurrencyService {
         var currencies = [Currency]()
         let currencyCodes = NSLocale.commonISOCurrencyCodes
         let locales = NSLocale.availableLocaleIdentifiers.map { Locale(identifier: $0) }
+        let localesHash = Dictionary(grouping: locales) { locale -> String in
+            return locale.currencyCode ?? ""
+        }
         let deprecated = AdditionalCurrencies().deprecatedCommon()
         let missing = AdditionalCurrencies().missingCommon()
-
+        
         for currencyCode in currencyCodes {
-            if let locale = locales.filter({ $0.currencyCode == currencyCode }).first {
+            if let locale = localesHash[currencyCode]?.first {
                 guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode), let regionCode = locale.regionCode else {
                     continue
                 }
@@ -37,14 +41,13 @@ public class CurrencyService {
                                         currencySymbol: locale.currencySymbol,
                                         regionCode: locale.regionCode,
                                         regionName: userLocale.localizedString(forRegionCode: regionCode),
+                                        localeIdentifier: locale.identifier,
                                         status: Currency.Status.available)
                 currencies.append(currency)
             } else if showDeprecatedCurrencies, let currency = makeCurrency(from: deprecated, userLocale: userLocale, currencyCode: currencyCode) {
                 currencies.append(currency)
             } else if let currency = makeCurrency(from: missing, userLocale: userLocale, currencyCode: currencyCode) {
                 currencies.append(currency)
-            } else {
-                print("Missing \(currencyCode)")
             }
         }
         
@@ -61,6 +64,7 @@ public class CurrencyService {
                         currencySymbol: info.currencySymbol,
                         regionCode: info.regionCode,
                         regionName: userLocale.localizedString(forRegionCode: info.regionCode),
+                        localeIdentifier: info.localeIdentifier,
                         status: Currency.Status.replaced(byCurrencyCode: info.replaceByCurrencyCode))
     }
 }
