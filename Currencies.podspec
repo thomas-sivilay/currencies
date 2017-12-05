@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'Currencies'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Service to retrieve all currencies with rich information like region code, name, currency symbol..'
   s.description      = <<-DESC
 A service to retrieve currency code, currency symbol, region code, region name instead of using NSLocale.commonISOCurrencyCodes.
