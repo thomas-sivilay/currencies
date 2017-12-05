@@ -22,45 +22,56 @@ public class CurrencyService {
     
     public func getCommonCurrencies(userLocale: Locale = NSLocale.current, showDeprecatedCurrencies: Bool = false) -> [Currency] {
         var currencies = [Currency]()
-        let currencyCodes = NSLocale.commonISOCurrencyCodes
         let locales = NSLocale.availableLocaleIdentifiers.map { Locale(identifier: $0) }
         let localesHash = Dictionary(grouping: locales) { locale -> String in
-            return locale.currencyCode ?? ""
+            return locale.regionCode ?? ""
         }
         let deprecated = AdditionalCurrencies().deprecatedCommon()
         let missing = AdditionalCurrencies().missingCommon()
         
-        for currencyCode in currencyCodes {
-            if let locale = localesHash[currencyCode]?.first {
-                guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode), let regionCode = locale.regionCode else {
-                    continue
+        for regionCode in Locale.isoRegionCodes {
+            if let locales = localesHash[regionCode] {
+                if let locale = locales.first, let currencyCode = locale.currencyCode {
+                    guard let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode), let regionCode = locale.regionCode else {
+                        continue
+                    }
+                    
+                    let currency = Currency(name: localizedCurrencyName,
+                                            currencyCode: currencyCode,
+                                            currencySymbol: locale.currencySymbol,
+                                            regionCode: locale.regionCode,
+                                            regionName: userLocale.localizedString(forRegionCode: regionCode),
+                                            localeIdentifier: locale.identifier,
+                                            status: Currency.Status.available)
+                    currencies.append(currency)
                 }
-                
-                let currency = Currency(name: localizedCurrencyName,
-                                        currencyCode: currencyCode,
-                                        currencySymbol: locale.currencySymbol,
-                                        regionCode: locale.regionCode,
-                                        regionName: userLocale.localizedString(forRegionCode: regionCode),
-                                        localeIdentifier: locale.identifier,
-                                        status: Currency.Status.available)
-                currencies.append(currency)
-            } else if showDeprecatedCurrencies, let currency = makeCurrency(from: deprecated, userLocale: userLocale, currencyCode: currencyCode) {
-                currencies.append(currency)
-            } else if let currency = makeCurrency(from: missing, userLocale: userLocale, currencyCode: currencyCode) {
-                currencies.append(currency)
+            }
+            
+            if missing.keys.contains(regionCode) {
+                if let currency = makeCurrency(from: missing, userLocale: userLocale, regionCode: regionCode) {
+                    currencies.append(currency)
+                }
+            }
+        }
+        
+        if showDeprecatedCurrencies {
+            for regionCode in deprecated.keys {
+                if let currency = makeCurrency(from: deprecated, userLocale: userLocale, regionCode: regionCode) {
+                    currencies.append(currency)
+                }
             }
         }
         
         return currencies
     }
     
-    private func makeCurrency(from additionalDic: [AdditionalCurrencies.CurrencyCode: AdditionalCurrencies.CurrencyInfo], userLocale: Locale, currencyCode: AdditionalCurrencies.CurrencyCode) -> Currency? {
-        guard let info = additionalDic[currencyCode], let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: currencyCode) else {
+    private func makeCurrency(from additionalDic: [AdditionalCurrencies.RegionCode: AdditionalCurrencies.CurrencyInfo], userLocale: Locale, regionCode: AdditionalCurrencies.RegionCode) -> Currency? {
+        guard let info = additionalDic[regionCode], let localizedCurrencyName = userLocale.localizedString(forCurrencyCode: info.currencyCode) else {
             return nil
         }
         
         return Currency(name: localizedCurrencyName,
-                        currencyCode: currencyCode,
+                        currencyCode: info.currencyCode,
                         currencySymbol: info.currencySymbol,
                         regionCode: info.regionCode,
                         regionName: userLocale.localizedString(forRegionCode: info.regionCode),
@@ -68,3 +79,5 @@ public class CurrencyService {
                         status: Currency.Status.replaced(byCurrencyCode: info.replaceByCurrencyCode))
     }
 }
+
+

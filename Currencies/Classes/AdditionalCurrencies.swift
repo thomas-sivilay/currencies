@@ -1,7 +1,7 @@
 import Foundation
 
 struct AdditionalCurrencies {
-    typealias CurrencyCode = String
+    typealias RegionCode = String
     
     struct CurrencyInfo {
         let currencyCode: String
@@ -10,17 +10,17 @@ struct AdditionalCurrencies {
         let regionCode: String
         let localeIdentifier: String
     }
-
-    func missingCommon() -> [CurrencyCode: CurrencyInfo] {
+    
+    func missingCommon() -> [RegionCode: CurrencyInfo] {
         let cucInfo = CurrencyInfo(currencyCode: "CUC", currencySymbol: "$CUC", replaceByCurrencyCode: "", regionCode: "CUB", localeIdentifier: "es_CU")
         let lslInfo = CurrencyInfo(currencyCode: "LSL", currencySymbol: "LSL", replaceByCurrencyCode: "", regionCode: "LSO", localeIdentifier: "en_US")
         return [
-            "CUC" : cucInfo,
-            "LSL" : lslInfo
+            "CU" : cucInfo,
+            "LS" : lslInfo
         ]
     }
     
-    func deprecatedCommon() -> [CurrencyCode: CurrencyInfo] {
+    func deprecatedCommon() -> [RegionCode: CurrencyInfo] {
         let byrInfo = CurrencyInfo(currencyCode: "BYR", currencySymbol: "Br", replaceByCurrencyCode: "BYN", regionCode: "BLR", localeIdentifier: "be_BY")
         let ltlInfo = CurrencyInfo(currencyCode: "LTL", currencySymbol: "LTL", replaceByCurrencyCode: "EUR", regionCode: "LTU", localeIdentifier: "lt_LT")
         let lvlInfo = CurrencyInfo(currencyCode: "LVL", currencySymbol: "LVL", replaceByCurrencyCode: "EUR", regionCode: "LVA", localeIdentifier: "lv_LV")
@@ -29,13 +29,14 @@ struct AdditionalCurrencies {
         let svcInfo = CurrencyInfo(currencyCode: "SVC", currencySymbol: "SVC", replaceByCurrencyCode: "USD", regionCode: "SLV", localeIdentifier: "es_SV")
         let gwpInfo = CurrencyInfo(currencyCode: "GWP", currencySymbol: "GWP", replaceByCurrencyCode: "XOF", regionCode: "GNB", localeIdentifier: "pt_GW")
         return [
-            "BYR" : byrInfo,
-            "LTL" : ltlInfo,
-            "LVL" : lvlInfo,
-            "MZE" : mzeInfo,
-            "SKK" : skkInfo,
-            "SVC" : svcInfo,
-            "GWP" : gwpInfo,
+            "BY" : byrInfo,
+            "LT" : ltlInfo,
+            "LV" : lvlInfo,
+            "MZ" : mzeInfo,
+            "SK" : skkInfo,
+            "SV" : svcInfo,
+            "GW" : gwpInfo,
         ]
     }
 }
+
